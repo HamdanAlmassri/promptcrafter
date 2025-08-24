@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- SEO Tags -->
+  <title>PromptCrafter — Free AI Prompt Generator</title>
+  <meta name="description" content="Free AI Prompt Generator for ChatGPT, Midjourney, DALL·E, and more. Create strong, unique, creative prompts in your language.">
+  <meta name="keywords" content="AI prompts, ChatGPT, Midjourney, DALL·E, prompt generator, free AI tool, creative prompts">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --bg2:#0e1326;
+      --card:#0f152eaa;
+      --text:#e6ecff;
+      --muted:#9fb3ff;
+      --brand1:#6d7cff;
+      --brand2:#19e6e6;
+      --ok:#16c47f;
+      --warn:#ffb84d;
+      --err:#ff6b6b;
+      --ring:#7aa2ff55;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 600px at 10% 0%, #1a245a 0%, transparent 40%),
+                         radial-gradient(1000px 500px at 90% 10%, #0b5f98 0%, transparent 45%),
+                         linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+      -webkit-font-smoothing:antialiased; overscroll-behavior-y:none;
+    }
+    .container{max-width:1000px; margin:0 auto; padding:24px;}
+    header{display:flex; align-items:center; gap:14px; padding:24px 0 12px}
+    .logo{width:40px;height:40px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(135deg, var(--brand1), var(--brand2)); box-shadow:var(--shadow)}
+    h1{margin:0; font-size:clamp(22px, 3vw, 28px); letter-spacing:.3px}
+    .sub{color:var(--muted); margin-top:4px; font-size:14px}
+
+    .card{background:var(--card); backdrop-filter: blur(10px); border:1px solid #ffffff1a; border-radius:var(--radius); box-shadow:var(--shadow); padding:18px}
+    .grid{display:grid; grid-template-columns: 1fr; gap:14px}
+    @media(min-width:820px){.grid{grid-template-columns: 1.2fr .8fr .8fr}}
+
+    label{display:block; font-weight:600; margin:2px 0 8px}
+    textarea, select, input[type="text"]{
+      width:100%; padding:12px 14px; border-radius:14px; border:1px solid #ffffff22; outline:none; background:#0b1130cf; color:var(--text);
+      transition:border .15s ease, box-shadow .15s ease;
+    }
+    textarea{min-height:120px; resize:vertical}
+    textarea[readonly]{min-height:200px}
+    textarea:focus, select:focus{border-color:#9bb4ff55; box-shadow:0 0 0 6px var(--ring)}
+
+    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .btn{appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:14px; font-weight:700; box-shadow:var(--shadow);
+      background:linear-gradient(135deg, var(--brand1), var(--brand2)); color:#0a0f25; letter-spacing:.2px}
+    .btn:hover{filter:brightness(1.06)}
+    .btn:active{transform:translateY(1px)}
+    .ghost{background:#101734; color:var(--text); border:1px solid #ffffff22}
+    .small{padding:8px 12px; font-size:14px; border-radius:12px}
+
+    .row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:6px 0 10px}
+    .note{font-size:13px; color:var(--warn); margin:6px 0 0}
+
+    .stack{display:flex; gap:10px; align-items:center}
+    .check{display:flex; gap:8px; align-items:center; color:var(--muted); font-size:14px}
+
+    footer{opacity:.65; font-size:12px; text-align:center; margin:20px auto 8px}
+    .muted{color:var(--muted)}
+
+    .kbd{padding:2px 6px; border-radius:6px; background:#11193a; border:1px solid #ffffff1f; font-size:12px}
+
+    .badge{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#0d1638; border:1px solid #ffffff22; color:var(--muted); font-size:12px}
+    .dot{width:8px; height:8px; border-radius:50%; background:linear-gradient(135deg, var(--brand1), var(--brand2))}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 19l12-7L6 5v14z" fill="#0a0f25"/>
+        </svg>
+      </div>
+      <div>
+        <h1>PromptCrafter — AI Prompt Generator</h1>
+        <div class="sub">Generate strong, detailed, unique & creative prompts for top AI platforms. 100% free, no signup, client‑side only.</div>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <span class="badge"><span class="dot"></span> Setup</span>
+        <span class="muted">Tip: Press <span class="kbd">Ctrl</span>+<span class="kbd">Enter</span> to generate</span>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="goal">1) Your command / goal</label>
+          <textarea id="goal" placeholder="e.g., Create a 60‑second YouTube script reviewing the iPhone 16 camera, with hooks and a CTA." spellcheck="true"></textarea>
+        </div>
+        <div>
+          <label for="platform">2) Platform</label>
+          <select id="platform">
+            <optgroup label="Text & Chat LLMs">
+              <option>ChatGPT (GPT‑5 / GPT‑4.x)</option>
+              <option>Claude 3.7</option>
+              <option>Google Gemini 1.5</option>
+              <option>Perplexity</option>
+              <option>Notion AI</option>
+              <option>Jasper</option>
+              <option>Copy.ai</option>
+            </optgroup>
+            <optgroup label="Image Generators">
+              <option>Midjourney</option>
+              <option>DALL·E</option>
+              <option>Stable Diffusion (SDXL)</option>
+              <option>Leonardo AI</option>
+              <option>Ideogram</option>
+              <option>Recraft</option>
+              <option>Canva Magic Media</option>
+            </optgroup>
+            <optgroup label="Video / Animation">
+              <option>Runway Gen‑3</option>
+              <option>Pika</option>
+              <option>Luma Dream Machine</option>
+              <option>Synthesia</option>
+            </optgroup>
+            <optgroup label="Audio / Voice">
+              <option>ElevenLabs</option>
+              <option>Descript</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label for="language">3) Prompt Language</label>
+          <select id="language">
+            <option>English</option>
+            <option>العربية (Arabic)</option>
+            <option>Español (Spanish)</option>
+            <option>Français (French)</option>
+            <option>Deutsch (German)</option>
+            <option>Português (Portuguese)</option>
+            <option>हिन्दी (Hindi)</option>
+            <option>日本語 (Japanese)</option>
+            <option>中文 (Chinese)</option>
+            <option>Türkçe (Turkish)</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <label class="check"><input type="checkbox" id="power" checked /> Add creativity power‑ups</label>
+        <label class="check"><input type="checkbox" id="engVersion" /> Also include English version</label>
+      </div>
+      <p id="note" class="note" hidden>Note: Visual platforms work best with English prompts. Language selection will be applied to text‑based platforms.</p>
+      <div class="actions">
+        <button class="btn" id="generate">Create prompt</button>
+        <button class="btn ghost" id="clear">Clear</button>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <div class="row">
+        <span class="badge"><span class="dot"></span> Output</span>
+        <div class="stack">
+          <button class="btn small ghost" id="copy">Copy</button>
+        </div>
+      </div>
+      <textarea id="output" readonly placeholder="Your generated prompt will appear here…"></textarea>
+      <div class="muted" style="margin-top:8px">Use this prompt in the selected platform. No data leaves your browser.</div>
+    </section>
+
+<footer>
+  <div>© <span id="year"></span> PromptCrafter — Built with ♥</div>
+  <div style="margin-top:4px; font-size:13px;">Made by Hamdan Almassri</div>
+<div style="margin-top:2px; font-size:13px;">
+  <a href="mailto:almasrihamdan97@gmail.com?subject=Contact%20from%20PromptCrafter&body=Hello%20Hamdan," style="color:var(--brand2)">Contact Us</a>
+</div>
+</footer>
+
+  </div>
+
+<script>
+// ====== Data & helpers ======
+const PLATFORM_CATEGORIES = {
+  "ChatGPT (GPT‑5 / GPT‑4.x)": "text-llm",
+  "Claude 3.7": "text-llm",
+  "Google Gemini 1.5": "text-llm",
+  "Perplexity": "text-llm",
+  "Notion AI": "text-llm",
+  "Jasper": "text-llm",
+  "Copy.ai": "text-llm",
+  "Midjourney": "image",
+  "DALL·E": "image",
+  "Stable Diffusion (SDXL)": "image",
+  "Leonardo AI": "image",
+  "Ideogram": "image",
+  "Recraft": "image",
+  "Canva Magic Media": "image",
+  "Runway Gen‑3": "video",
+  "Pika": "video",
+  "Luma Dream Machine": "video",
+  "Synthesia": "video",
+  "ElevenLabs": "audio",
+  "Descript": "audio",
+};
+
+const RTL_LANGS = ["العربية (Arabic)"]; // simple RTL detection
+const nowYear = new Date().getFullYear();
+
+function $(id){return document.getElementById(id)}
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+// tasteful word banks to enrich image/video prompts
+const BANK = {
+  styles:["cinematic","editorial","futuristic","minimalist","neo‑noir","surreal","photorealistic","vector art","isometric","studio lighting","glassmorphism"],
+  moods:["hopeful","dramatic","whimsical","mysterious","euphoric","calm","intense"],
+  lighting:["soft diffused","golden hour","volumetric","rim‑lit","neon glow","moody contrast"],
+  composition:["rule of thirds","centered","wide shot","close‑up","over‑the‑shoulder","top‑down","dutch angle"],
+  quality:["8k detail","high dynamic range","film grain subtle","ultra sharp","clean background"],
+};
+
+// ====== Templates ======
+function textTemplate(goal, platform, language, powerUps){
+  const power = powerUps ? `\n- Add 3 vivid, concrete details that make the result feel original.\n- Avoid clichés and generic phrasing. Prefer precise nouns and strong verbs.\n- Validate any factual claims before using them (cite sources if relevant).\n- Offer 2 alternative angles in a short list at the end.` : "";
+  return `You are an expert ${platform} prompt engineer and senior ${platform} operator.\n\nTASK:\nCraft the best possible instruction for ${platform} to accomplish this goal: \n\n>>> ${goal}\n\nREQUIREMENTS:\n- Write the final prompt in ${language}.\n- Start with a crisp one‑sentence objective.\n- Include audience, constraints, success criteria, and delivery format.\n- Specify tone, style, and length.\n- Ask the model to think through the task step by step, but output only the final result (no reasoning).${power}\n\nOUTPUT FORMAT (in ${language}):\n1) \"FINAL PROMPT\" — a single, copy‑ready block for ${platform}.\n2) \"GUIDANCE\" — 3 bullet tips for best results (temperature/settings if applicable).`;
+}
+
+function imageTemplate(goal, platform){
+  // Build a rich image prompt using curated random power words
+  const style = rand(BANK.styles), mood = rand(BANK.moods), light = rand(BANK.lighting), comp = rand(BANK.composition), qual = rand(BANK.quality);
+  let negative = "blurry, low‑res, low detail, oversaturated, artifacts, watermark, text";
+  if(platform==="DALL·E" || platform==="Ideogram" || platform==="Canva Magic Media") negative = ""; // many do not use negative prompts
+  return `Subject: ${goal}.\nStyle: ${style}, ${mood}.\nComposition: ${comp}.\nLighting: ${light}.\nTechnical: ${qual}.\nDetails: intricate textures, coherent anatomy, natural perspective, clean background.\nAspect ratio: 16:9.\n${negative ? `Negative prompt: ${negative}.\n` : ""}Instruction: Generate 3 distinct variations that stay faithful to the subject while exploring different color palettes and compositions.`;
+}
+
+function videoTemplate(goal, platform){
+  const light = rand(BANK.lighting), mood = rand(BANK.moods);
+  return `Create a ${platform} video concept from the following brief: \n\nBRIEF: ${goal}.\n\nStructure:\n- Duration: 12–15 seconds, aspect 16:9.\n- Visual style & mood: ${mood}, ${light}.\n- Shot plan (each line = scene):\n  1) Establishing shot (2–3s) — location/context.\n  2) Action shot (4–6s) — main subject performing.\n  3) Hero close‑up (2–3s) — key detail or emotional beat.\n  4) Outro (2–3s) — logo/tagline or payoff.\n- Motion: gentle camera moves (push‑in, pan), smooth transitions.\n- Text overlays: minimal, avoid clutter.\n- Sound: ambient or light music; no copyrighted tracks.\n\nDeliver 2 alternative scene lists with different pacing or locations.`;
+}
+
+function audioTemplate(goal, platform){
+  return `Generate a ${platform} voiceover script and settings for: ${goal}.\n\nInclude:\n- Voice: gender/age/accent suggestion + 1–2 style tags (e.g., \"warm, persuasive\").\n- Tempo & pauses: note where to slow down or emphasize.\n- Script: 90–120 words with clear CTA at the end.\n- Optional SSML cues for emphasis and breaks.\n- Provide a second variant in a different tone.`;
+}
+
+function makePrompt(goal, platform, language, powerUps, includeEnglish){
+  const cat = PLATFORM_CATEGORIES[platform] || "text-llm";
+  let mainPrompt = "";
+  if(cat === 'text-llm'){
+    mainPrompt = textTemplate(goal, platform, language, powerUps);
+  } else if(cat === 'image'){
+    mainPrompt = imageTemplate(goal, platform);
+  } else if(cat === 'video'){
+    mainPrompt = videoTemplate(goal, platform);
+  } else if(cat === 'audio'){
+    mainPrompt = audioTemplate(goal, platform);
+  }
+
+  // English twin if requested and platform is text-based or user insists
+  if(includeEnglish && cat === 'text-llm' && language !== 'English'){
+    const englishTwin = textTemplate(goal, platform, 'English', powerUps);
+    return `— ${platform} —\n\n[${language}]\n${mainPrompt}\n\n[English] (bonus)\n${englishTwin}`;
+  }
+  return `— ${platform} —\n\n${mainPrompt}`;
+}
+
+// ====== UI logic ======
+$('year').textContent = nowYear;
+
+function updateNote(){
+  const platform = $('platform').value; const cat = PLATFORM_CATEGORIES[platform];
+  const note = $('note');
+  if(cat!== 'text-llm'){ note.hidden = false; }
+  else { note.hidden = true; }
+}
+$('platform').addEventListener('change', updateNote);
+updateNote();
+
+function setOutputDir(){
+  const language = $('language').value;
+  const rtl = RTL_LANGS.includes(language);
+  $('output').setAttribute('dir', rtl ? 'rtl' : 'ltr');
+}
+$('language').addEventListener('change', setOutputDir);
+setOutputDir();
+
+function generate(){
+  const goal = $('goal').value.trim();
+  const platform = $('platform').value;
+  const language = $('language').value;
+  const power = $('power').checked;
+  const includeEn = $('engVersion').checked;
+  if(!goal){ $('output').value = 'Please describe your command/goal first.'; return; }
+  const prompt = makePrompt(goal, platform, language, power, includeEn);
+  $('output').value = prompt;
+  // persist
+  localStorage.setItem('pc_goal', goal);
+  localStorage.setItem('pc_platform', platform);
+  localStorage.setItem('pc_lang', language);
+}
+
+function copyOut(){
+  const text = $('output').value;
+  if(!text){ return; }
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      const btn = $('copy'); const old = btn.textContent; btn.textContent = 'Copied!';
+      setTimeout(()=>btn.textContent=old, 1200);
+    }).catch(()=>fallbackCopy(text));
+  } else { fallbackCopy(text); }
+}
+function fallbackCopy(text){
+  const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+}
+
+function clearAll(){
+  $('goal').value=''; $('output').value='';
+}
+
+$('generate').addEventListener('click', generate);
+$('copy').addEventListener('click', copyOut);
+$('clear').addEventListener('click', clearAll);
+
+// Keyboard shortcut Ctrl/Cmd + Enter
+window.addEventListener('keydown', (e)=>{
+  if((e.ctrlKey||e.metaKey) && e.key === 'Enter'){ generate(); }
+});
+
+// restore persisted values
+(function(){
+  const g = localStorage.getItem('pc_goal'); if(g) $('goal').value = g;
+  const p = localStorage.getItem('pc_platform'); if(p) $('platform').value = p;
+  const l = localStorage.getItem('pc_lang'); if(l) $('language').value = l;
+})();
+</script>
+</body>
+</html>
