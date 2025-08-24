@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <!-- SEO Tags -->
   <title>PromptCrafter — Free AI Prompt Generator</title>
   <meta name="description" content="Free AI Prompt Generator for ChatGPT, Midjourney, DALL·E, and more. Create strong, unique, creative prompts in your language.">
   <meta name="keywords" content="AI prompts, ChatGPT, Midjourney, DALL·E, prompt generator, free AI tool, creative prompts">
   <meta name="google-site-verification" content="PhKd6eDNwXs_49WrJAP0j7-DDnuK3htRqBSjHbz7cWU" />
+
   <style>
     :root{
       --bg: #0b1020;
@@ -225,8 +225,26 @@ const BANK = {
 
 // ====== Templates ======
 function textTemplate(goal, platform, language, powerUps){
-  const power = powerUps ? `\n- Add 3 vivid, concrete details that make the result feel original.\n- Avoid clichés and generic phrasing. Prefer precise nouns and strong verbs.\n- Validate any factual claims before using them (cite sources if relevant).\n- Offer 2 alternative angles in a short list at the end.` : "";
-  return `You are an expert ${platform} prompt engineer and senior ${platform} operator.\n\nTASK:\nCraft the best possible instruction for ${platform} to accomplish this goal: \n\n>>> ${goal}\n\nREQUIREMENTS:\n- Write the final prompt in ${language}.\n- Start with a crisp one‑sentence objective.\n- Include audience, constraints, success criteria, and delivery format.\n- Specify tone, style, and length.\n- Ask the model to think through the task step by step, but output only the final result (no reasoning).${power}\n\nOUTPUT FORMAT (in ${language}):\n1) \"FINAL PROMPT\" — a single, copy‑ready block for ${platform}.\n2) \"GUIDANCE\" — 3 bullet tips for best results (temperature/settings if applicable).`;
+  // Start with a clear persona and the core task for the AI.
+  let prompt = `As an expert assistant using ${platform}, your primary task is to fulfill the following request with precision and creativity. The final output must be in ${language}.\n\n`;
+
+  // Clearly state the user's goal.
+  prompt += `## Request\n"${capitalize(goal)}"\n\n`;
+
+  // If power-ups are enabled, add them as direct instructions for the AI's output.
+  if (powerUps) {
+    prompt += `## Instructions & Constraints\n`;
+    prompt += `- **Tone and Style:** Adopt a suitable tone for the request. Avoid clichés and generic phrasing. Use precise nouns and strong verbs.\n`;
+    prompt += `- **Content Quality:** Ensure the response is detailed, original, and well-structured. Add vivid, concrete examples to make the result feel unique and engaging.\n`;
+    prompt += `- **Formatting:** Use markdown (headings, lists, bolding) to structure your response for clarity and readability.\n`;
+    prompt += `- **Accuracy:** If you include any factual claims, verify they are correct.\n`;
+    prompt += `- **Next Steps:** After the main response, offer 2 alternative angles or suggestions in a short list.`;
+  }
+  
+  // A final instruction to proceed.
+  prompt += `\nBegin execution.`;
+
+  return prompt;
 }
 
 function imageTemplate(goal, platform){
