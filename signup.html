@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sign up — PromptCrafter</title>
+<style>body{font-family:system-ui,Arial;padding:32px;max-width:480px;margin:auto}form{display:grid;gap:12px;margin:16px 0}input,button{padding:10px;font-size:16px}button{cursor:pointer}</style>
+</head>
+<body>
+<h1>Create your account</h1>
+
+
+<form id="signup-form">
+<input id="signup-email" type="email" placeholder="Email" required />
+<input id="signup-password" type="password" placeholder="Password (min 6 chars)" required minlength="6" />
+<input id="signup-confirm" type="password" placeholder="Confirm password" required minlength="6" />
+<input id="signup-name" type="text" placeholder="Display name (optional)" />
+<button type="submit">Sign up</button>
+</form>
+
+
+<p>Already have an account? <a href="./login.html">Log in</a></p>
+
+
+<!-- Firebase + init -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-init.js"></script>
+
+
+<script>
+window.auth.onAuthStateChanged(user => { if (user) location.href = './index.html'; });
+
+
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = document.getElementById('signup-email').value.trim();
+const password = document.getElementById('signup-password').value;
+const confirm = document.getElementById('signup-confirm').value;
+const displayName = document.getElementById('signup-name').value.trim();
+if (password !== confirm) return alert('Passwords do not match.');
+
+
+try {
+const cred = await window.auth.createUserWithEmailAndPassword(email, password);
+if (displayName) { await cred.user.updateProfile({ displayName }); }
+// Create profile doc with default fields
+await window.db.collection('users').doc(cred.user.uid).set({
+uid: cred.user.uid,
+email: email,
+displayName: displayName || '',
+createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+plan: 'free'
+});
+// Optional: email verification
+try { await cred.user.sendEmailVerification(); } catch(_) {}
+location.href = './index.html';
+} catch (err) { alert(err.message); }
+});
+</script>
+</body>
+</html>
