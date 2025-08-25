@@ -88,49 +88,7 @@
   </style>
 </head>
 <body>
-      <!-- Auth Section -->
-    <section class="card" style="margin-top:20px; max-width:400px; margin-left:auto; margin-right:auto;">
-      <div id="login-form">
-        <h2 style="text-align:center; margin-bottom:16px;">Log In</h2>
-        <input id="login-email" type="email" placeholder="Email" style="width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid #ffffff22; background:#0b1130cf; color:var(--text);" />
-        <input id="login-password" type="password" placeholder="Password" style="width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid #ffffff22; background:#0b1130cf; color:var(--text);" />
-        <button class="btn" style="width:100%; margin-top:12px;" onclick="logIn(
-          document.getElementById('login-email').value,
-          document.getElementById('login-password').value
-        )">Log In</button>
-        <div class="muted" style="margin-top:10px; text-align:center;">
-          <a href="#" onclick="showSignUp()" style="color:var(--brand2);">Need an account? Sign Up</a> | 
-          <a href="reset.html" style="color:var(--brand2);">Forgot password?</a>
-        </div>
-      </div>
-
-      <div id="signup-form" style="display:none;">
-        <h2 style="text-align:center; margin-bottom:16px;">Sign Up</h2>
-        <input id="signup-name" placeholder="Name" style="width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid #ffffff22; background:#0b1130cf; color:var(--text);" />
-        <input id="signup-email" type="email" placeholder="Email" style="width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid #ffffff22; background:#0b1130cf; color:var(--text);" />
-        <input id="signup-password" type="password" placeholder="Password" style="width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid #ffffff22; background:#0b1130cf; color:var(--text);" />
-        <button class="btn" style="width:100%; margin-top:12px;" onclick="signUp(
-          document.getElementById('signup-email').value,
-          document.getElementById('signup-password').value,
-          document.getElementById('signup-name').value
-        )">Sign Up</button>
-        <div class="muted" style="margin-top:10px; text-align:center;">
-          <a href="#" onclick="showLogin()" style="color:var(--brand2);">Already have an account? Log In</a>
-        </div>
-      </div>
-    </section>
-<script>
-  function showSignUp() {
-    document.getElementById('login-form').style.display = "none";
-    document.getElementById('signup-form').style.display = "block";
-  }
-
-  function showLogin() {
-    document.getElementById('signup-form').style.display = "none";
-    document.getElementById('login-form').style.display = "block";
-  }
-</script>
-
+  
   <div class="container">
     <header>
       <div class="logo" aria-hidden="true">
