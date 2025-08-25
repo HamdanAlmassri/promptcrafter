@@ -8,6 +8,16 @@
   <meta name="description" content="Free AI Prompt Generator for ChatGPT, Midjourney, DALL·E, and more. Create strong, unique, creative prompts in your language.">
   <meta name="keywords" content="AI prompts, ChatGPT, Midjourney, DALL·E, prompt generator, free AI tool, creative prompts">
   <meta name="google-site-verification" content="PhKd6eDNwXs_49WrJAP0j7-DDnuK3htRqBSjHbz7cWU" />
+<!-- Firebase scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<!-- Your Firebase config -->
+<script src="./firebase-init.js"></script>
+
+<!-- Your auth functions -->
+<script src="./auth.js"></script>
 
   <style>
     :root{
@@ -77,6 +87,62 @@
   </style>
 </head>
 <body>
+ <!-- Navigation menu -->
+  <nav>
+    <a href="#home">Home</a> |
+    <a href="#signup">Sign Up</a> |
+    <a href="#login">Log In</a> |
+    <a href="#reset">Reset Password</a>
+  </nav>
+
+  <!-- Home section -->
+  <section id="home">
+    <h1>Welcome to PromptCrafter</h1>
+    <p>Your AI prompt generator and user dashboard.</p>
+  </section>
+
+  <!-- Sign Up section -->
+  <section id="signup">
+    <h2>Create an Account</h2>
+    <input id="signup-name" placeholder="Name"><br>
+    <input id="signup-email" placeholder="Email"><br>
+    <input id="signup-password" type="password" placeholder="Password"><br>
+    <button onclick="signUp(
+      document.getElementById('signup-email').value,
+      document.getElementById('signup-password').value,
+      document.getElementById('signup-name').value
+    )">Sign Up</button>
+  </section>
+
+  <!-- Log In section -->
+  <section id="login">
+    <h2>Log In</h2>
+    <input id="login-email" placeholder="Email"><br>
+    <input id="login-password" type="password" placeholder="Password"><br>
+    <button onclick="logIn(
+      document.getElementById('login-email').value,
+      document.getElementById('login-password').value
+    )">Log In</button>
+  </section>
+
+  <!-- Reset Password section -->
+  <section id="reset">
+    <h2>Reset Password</h2>
+    <input id="reset-email" placeholder="Email"><br>
+    <button onclick="resetPassword(document.getElementById('reset-email').value)">Reset Password</button>
+  </section>
+
+  <!-- Profile section -->
+  <section id="profile">
+    <h2>Profile</h2>
+    <div id="profile-info" style="display:none">
+      <p id="profile-name"></p>
+      <p id="profile-email"></p>
+      <button onclick="logOut()">Log Out</button>
+    </div>
+  </section>
+
+
   <div class="container">
     <header>
       <div class="logo" aria-hidden="true">
