@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reset password — PromptCrafter</title>
-<style>body{font-family:system-ui,Arial;padding:32px;max-width:480px;margin:auto}form{display:grid;gap:12px;margin:16px 0}input,button{padding:10px;font-size:16px}button{cursor:pointer}</style>
+  <meta charset="UTF-8">
+  <title>Reset Password — PromptCrafter</title>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="./firebase-init.js"></script>
+  <script src="./auth.js"></script>
 </head>
 <body>
-<h1>Reset your password</h1>
-<form id="reset-form">
-<input id="reset-email" type="email" placeholder="Email" required />
-<button type="submit">Send reset email</button>
-</form>
-<p><a href="./login.html">Back to login</a></p>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="signup.html">Sign Up</a> |
+    <a href="login.html">Log In</a> |
+    <a href="reset.html">Reset Password</a>
+  </nav>
 
-
-<!-- Firebase + init -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="./firebase-init.js"></script>
-
-
-<script>
-document.getElementById('reset-form').addEventListener('submit', async (e) => {
-e.preventDefault();
-const email = document.getElementById('reset-email').value.trim();
-try { await window.auth.sendPasswordResetEmail(email); alert('Password reset email sent.'); }
-catch (err) { alert(err.message); }
-});
-</script>
+  <h1>Reset Password</h1>
+  <input id="reset-email" placeholder="Email"><br>
+  <button onclick="resetPassword(document.getElementById('reset-email').value)">Reset Password</button>
 </body>
 </html>
