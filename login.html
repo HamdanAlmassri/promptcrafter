@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Log in — PromptCrafter</title>
+<style>
+body{font-family:system-ui,Arial;padding:32px;max-width:480px;margin:auto}
+form{display:grid;gap:12px;margin:16px 0}
+input,button{padding:10px;font-size:16px}
+button{cursor:pointer}
+nav a{margin-right:8px}
+</style>
+</head>
+<body>
+<h1>Log in</h1>
+
+
+<form id="login-form">
+<input id="login-email" type="email" placeholder="Email" required />
+<input id="login-password" type="password" placeholder="Password" required minlength="6" />
+<button type="submit">Log in</button>
+</form>
+
+
+<button id="google-btn" type="button">Continue with Google</button>
+
+
+<nav>
+<a href="./reset.html">Forgot password?</a>
+<a href="./signup.html">Create an account</a>
+</nav>
+
+
+<!-- Firebase + init -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="./firebase-init.js"></script>
+
+
+<script>
+// If already logged in, go to the app
+window.auth.onAuthStateChanged(user => { if (user) location.href = './index.html'; });
+
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = document.getElementById('login-email').value.trim();
+const password = document.getElementById('login-password').value;
+try {
+await window.auth.signInWithEmailAndPassword(email, password);
+location.href = './index.html';
+} catch (err) { alert(err.message); }
+});
+
+
+document.getElementById('google-btn').addEventListener('click', async () => {
+const provider = new firebase.auth.GoogleAuthProvider();
+try { await window.auth.signInWithPopup(provider); location.href = './index.html'; }
+catch (err) { alert(err.message); }
+});
+</html>
